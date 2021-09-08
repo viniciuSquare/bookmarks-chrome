@@ -11,42 +11,74 @@ body {
   height: 100vh;
 }
 
+button {
+  line-height: 0;
+  cursor: pointer;
+}
+
+/* END GLOBAL SETTINGS*/
+
 header {
   display: flex;
   justify-content: space-between;
 
   padding: 1.5rem;
-  padding-left: 3rem;
 }
 
-.add_bookmark {
-  max-width: 30%;
+.header-divider-container {
+  display: flex;
+  width: 20vw;
 }
 
-.add_bookmark form {
-  display: grid;
-  grid-template-columns: 25% 60% 10%;
-  flex: 1;
+.header-divider-container.right {
+  justify-content: flex-end;
+}
+
+/* , .right #show-add-modal-btn    */
+.left #page-context-title {
+  margin: 0 2rem;
+  font-size: 2rem;
   
-  gap: 4px;
-
 }
 
-.add_bookmark input, .add_bookmark button {
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  border-radius: 4px;
+header button {
+  border: none;
+  background: none;
 }
 
-.add_bookmark input {
-  padding: 0.5rem;
+.handlers-buttons {
+  margin: auto;
 
-  color: rgb(94, 93, 93);
+  display: flex;
+  align-items: center;
+  column-gap: 1rem;
 }
 
-/* TESTING */
-#show-add-modal-btn {
-  width: 4rem;
+.handlers-buttons button, .handlers-buttons button#show-add-modal-btn svg {
+  width: 1.8rem;
+  height: 2.5rem;
+  
+  opacity: 0.7;
 }
+.handlers-buttons button:hover {
+  opacity: 1;
+  
+}
+
+.context-change-btn {
+  width: 1.3rem;
+  opacity: 0.4;
+}
+
+.context-change-btn:hover {
+  transform: scale(1.2);
+  opacity: 0.7;
+}
+
+.context-change-btn .rotate-180deg {
+  transform: rotate(180deg);
+}
+/* END HEADER */
 
 .modal {
   position: absolute;
@@ -55,25 +87,66 @@ header {
 
   transform: translate(-50%, -50%);
 
-  height: 150px;
-  width: 450px;
+  max-width: 40%;
+  height: 35vh;
 
   background-color: white;
+  border-radius: 10px;
 
-  flex-direction: column;
-  justify-content: space-around;
+  box-shadow: 0px 1px 15px 0px rgba(0,0,0,0.2);
+  -webkit-box-shadow: 0px 1px 15px 0px rgba(0,0,0,0.2);
+  -moz-box-shadow: 0px 1px 15px 0px rgba(0,0,0,0.2);
 
   padding: 1rem 2.5rem;
 
 }
 
-.modal form h3{
+.modal h3{
   margin-bottom: 0.5rem ;
+  font-size: 1rem;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.modal#add-bookmark-modal form {
+  height: 95%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.modal#add-bookmark-modal form .form-content-container{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  
+  row-gap: 0.8rem;
+  column-gap: 4px;
+}
+
+.modal#add-bookmark-modal form #submit-bookmark {
+  height: 2rem;
+
+}
+
+#add-bookmark-modal input, #add-bookmark-modal button {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  max-width: 100%;
+}
+
+#add-bookmark-modal input {
+  height: 2rem;
+  color: rgb(94, 93, 93);
+  padding-left: 10px;
 }
 
 .modal.hidden {
-  display: none;
+  display: none !important ; 
 }
+
+/* END MODAL */
 
 a {
   text-decoration: none;
@@ -138,6 +211,8 @@ a {
   align-self: center;
   font-size: 1rem;
 }
+
+/* END BOOKMARKS */
 
 footer {
   display: flex;

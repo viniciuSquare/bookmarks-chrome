@@ -18,10 +18,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
   localStorage.setItem("bookmarks", JSON.stringify(contentToInsert))
   
   showAddModal.addEventListener('click', (e) => {
-    addBookmarkModal.style.display = "flex";
+    // addBookmarkModal.style.display = "flex";
+    addBookmarkModal.classList.toggle("hidden")
 
     let subjects = loadBookmarks().map( ({subject}) => subject)
-    // console.log(subjects)
+    console.log(subjects)
     subjects.forEach( (subject, idx) => {
       let option = document.createElement('option');
       option.value = idx;
@@ -32,6 +33,15 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
   })
 });
+
+subjectPicker.addEventListener('change', (event) => {
+  if(event.target.value != "new") {
+    // addSubjectInput.style.display = "hidden";
+    addSubjectInput.disabled = true
+  } else {
+    addSubjectInput.style.display = "inline-block";
+  }
+})
 
 addBookmarkButton.addEventListener('click', (event) => {
   event.preventDefault();
@@ -72,15 +82,6 @@ addBookmarkButton.addEventListener('click', (event) => {
   localStorage.setItem("bookmarks", JSON.stringify(bookmarks))
   // buildView()
 })
-
-subjectPicker.addEventListener('change', (event) => {
-  if(event.target.value != "new") {
-    addSubjectInput.style.display = "none";
-  } else {
-    addSubjectInput.style.display = "inline-block";
-  }
-})
-
 
 // FUNCTIONS
 function saveBookmark() {
@@ -168,27 +169,27 @@ const contentToInsert = [
       {
         title: "PFSense",
         url: "http://172.168.0.1",
-        imageSrc: "./assets/pfsense.png"
+        imageSrc: "./assets/linksIcons/pfsense.png"
       },
       {
         title: "TimeCloud",
         url: "https://172.168.1.200/index.php",
-        imageSrc: "./assets/TimeCloud.png"
+        imageSrc: "./assets/linksIcons/TimeCloud.png"
       },
       {
         title: "Unifi",
         url: "https://172.168.1.250:8443/manage/site/qqnv99lr/devices/1/50",
-        imageSrc: "./assets/unifi.png"
+        imageSrc: "./assets/linksIcons/unifi.png"
       },
       {
         title: "Hostgator",
         url: "https://cliente.hostgator.com.br/meus-sites",
-        imageSrc: "./assets/hostgator.png"
+        imageSrc: "./assets/linksIcons/hostgator.png"
       },
       {
         title: "eSolution",
         url: "https://portal.esolution.com.br/Ticket/?ticketIntroductionType=17",
-        imageSrc: "./assets/esico.ico"
+        imageSrc: "./assets/linksIcons/esico.ico"
       },
     ]
   },
@@ -198,12 +199,12 @@ const contentToInsert = [
       {
         title: "Work Activities",
         url: "https://www.notion.so/Work-activities-32ce7d01fbee4e50bb9075d63b821263",
-        imageSrc: "./assets/notion.png"
+        imageSrc: "./assets/linksIcons/notion.png"
       },
       {
         title: "TI Docs",
         url: "https://drive.google.com/drive/u/0/folders/10KC24XXI3y9CtGJjcQMfGP9y6x7mINc0",
-        imageSrc: "./assets/drive.png"
+        imageSrc: "./assets/linksIcons/drive.png"
       }
     ]
   }

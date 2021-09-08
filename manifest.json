@@ -1,0 +1,25 @@
+{
+  "manifest_version": 2,
+  "name": "SQR Bookmarks",
+  "version": "0.1",
+ 
+   "background": {
+    "scripts": ["./src/background.js"]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": ["./src/content.js"]
+    }
+  ],
+  "browser_action": {
+    "default_icon": "./src/assets/icon.png"
+  }, 
+  
+  "permissions": [
+    "tabs",
+    "storage"
+  ]
+}

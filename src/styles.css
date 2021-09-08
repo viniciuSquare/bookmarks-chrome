@@ -1,0 +1,152 @@
+* {
+  margin: 0;
+  padding: 0;
+
+  box-sizing: border-box;
+  font-family: 'Open Sans', sans-serif;
+}
+
+body {
+  width: 100%;
+  height: 100vh;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+
+  padding: 1.5rem;
+  padding-left: 3rem;
+}
+
+.add_bookmark {
+  max-width: 30%;
+}
+
+.add_bookmark form {
+  display: grid;
+  grid-template-columns: 25% 60% 10%;
+  flex: 1;
+  
+  gap: 4px;
+
+}
+
+.add_bookmark input, .add_bookmark button {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+}
+
+.add_bookmark input {
+  padding: 0.5rem;
+
+  color: rgb(94, 93, 93);
+}
+
+/* TESTING */
+#show-add-modal-btn {
+  width: 4rem;
+}
+
+.modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  transform: translate(-50%, -50%);
+
+  height: 150px;
+  width: 450px;
+
+  background-color: white;
+
+  flex-direction: column;
+  justify-content: space-around;
+
+  padding: 1rem 2.5rem;
+
+}
+
+.modal form h3{
+  margin-bottom: 0.5rem ;
+}
+
+.modal.hidden {
+  display: none;
+}
+
+a {
+  text-decoration: none;
+  color: rgb(26, 26, 26);
+}
+
+#content {
+  display: flex;
+
+  overflow-y: auto;
+
+  max-width: 95%;
+  max-height: 80%;
+  height: 100%;
+
+  margin: auto;
+  padding: 2rem 3rem;
+
+  /* border: 1px solid rgba(178, 224, 244, 0.5); */
+  background-color: rgba(177, 177, 177, 0.214) ;
+  border-radius: 10px;
+}
+
+#content .bookmark_list {
+
+  /* height: 70vh; */
+  width: 300px;
+
+  padding: 0.8rem;
+  margin-right: 3rem;
+
+  border-radius: 8px;
+
+  /* background-color: rgba(200, 200, 211, 0.66); */
+}
+
+#content .bookmark_list .bookmark {  
+  display: flex;
+
+  width: 100%;
+  height: 60px;
+
+  margin: 0.6rem 0;
+
+  border-radius: 2px;
+  border: 1px solid rgba(113, 113, 113, 0.5);
+
+  background-color: rgba(255, 255, 255, 0.598);
+
+}
+
+#content .bookmark_list .bookmark img{
+  max-width: 60px;
+
+  object-fit:contain;
+
+  padding: 8px;
+  margin-right: 10px;
+}
+
+#content .bookmark_list .bookmark .bookmark_title{
+  align-self: center;
+  font-size: 1rem;
+}
+
+footer {
+  display: flex;
+  max-width: 95%;
+
+  margin-top: 10px;
+  color: #b4b4b5;
+}
+
+footer p{
+  margin-left: auto;
+}

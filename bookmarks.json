@@ -1,0 +1,16 @@
+{
+  "network" : [
+    {
+      "title" : "MXtoolbox",
+      "link" : "https://mxtoolbox.com/blacklists.aspx",
+      "favicon_path" : "",
+      "category" : "Network tool"
+    },
+    {
+      "title" : "Meu IP",
+      "link" : "https://meuip.com.br",
+      "favicon_path" : "",
+      "category" : "Network tool"
+    }
+  ]
+}

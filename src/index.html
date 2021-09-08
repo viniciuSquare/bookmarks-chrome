@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bookmarks</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔗</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+
+</head>
+<body> 
+  <header>
+    <button>
+      
+    </button>
+    <h1>Work</h1>
+      
+  <!-- MODAL OPENER -->
+    <button type="submit" id="show-add-modal-btn">add</button>
+    
+    <!-- NEW BOOKMARK MODAL -->
+    <div class="add-bookmark modal hidden" id="add-bookmark-modal"> 
+      <form 
+        action="submit"
+        id="add-form"
+        autocomplete="off"
+      >
+        <h3>Add new bookmark</h3>
+        <input 
+          type="text"
+          placeholder="Title"
+          name="title">
+        <input 
+          type="text"
+          placeholder="URL"
+          name="url">
+        <select name="subject-picker" id="subject-book-picker">
+          <!-- FEED THE PIKER WITH AVAIABLE SUBJECTS FROM LOCAL STORAGE -->
+          <option value="new">NEW</option>
+          <!-- <option value="Controllers">Controllers</option> -->
+        </select>
+        
+        <!-- IF NEW SUBJECT -->
+        <input 
+          type="text"
+          placeholder="subject name"
+          id="new-subject-input"
+          name="subject"> 
+        <!-- --- -->
+
+        <input 
+          type="text"
+          placeholder="Image source"
+          id="image-src-input"
+          name="imageSrc">
+
+        <button 
+          type="submit"
+          id="submit-bookmark"
+        >
+          ADD
+        </button>
+      </form>
+    </div>
+
+
+  </header>
+  <div id="content" >    
+  <!-- WHERE THE CONTENT WILL BE PLACED -->
+  </div>
+  <footer>
+    <p>Created by <a href="https://github.com/viniciuSquare" target="_blank">@viniciuSquare</a></p>
+  </footer>
+  <script src="./script.js"></script>
+</body>
+</html>

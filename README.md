@@ -14,4 +14,4 @@ Foi desenvolvida por curiosidade no desenvolvimento de extensões e uma necessid
 ### ✅ To-do
 - Editar bookmarks salvos
 - Criar contextos diferentes
-- Personalizar
+- Personalizar posição e tema

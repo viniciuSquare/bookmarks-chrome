@@ -216,10 +216,19 @@ a {
 
 footer {
   display: flex;
+  justify-content: space-between;
+  margin: auto;
+
   max-width: 95%;
 
   margin-top: 10px;
   color: #b4b4b5;
+}
+footer #reset-btn {
+  color: #b4b4b5;
+  background: transparent;
+  border: none;
+
 }
 
 footer p{

@@ -15,7 +15,7 @@
     }
   ],
   "browser_action": {
-    "default_icon": "./src/assets/linksIcons/icon.png"
+    "default_icon": "./src/assets/icon.png"
   }, 
   
   "permissions": [

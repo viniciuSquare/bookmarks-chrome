@@ -142,7 +142,11 @@ header button {
   padding-left: 10px;
 }
 
-.modal.hidden {
+#add-bookmark-modal .span-2{
+  grid-column: span 2;
+}
+
+.hidden {
   display: none !important ; 
 }
 

@@ -4,17 +4,19 @@ const nextContextBtn = document.getElementById('next-context')
 
 const contextTitle = document.getElementById('page-context-title')
 
-const showAddModal = document.getElementById("show-add-modal-btn")
-// TODO - EDIT BUTTON
+// MODAL HANDLERS COMPONENTS
+const formModal = document.getElementById("add-bookmark-modal");
+const showFormModalButton = document.getElementById("show-add-modal-btn")
+const showContextFieldsetButton = document.getElementById("create-context-button")
+const formSubmissionButton = document.getElementById("submit-bookmark")
 
-const addBookmarkModal = document.getElementById("add-bookmark-modal");
-const newContextInput = document.getElementById('new-context-input')
-const addLinkInput = document.getElementById("add-input")
+// FORM ELEMENTS
+const creationForm = document.getElementById("form-container")
+const newContextFieldset = document.getElementById('context-fieldset')
 const addSubjectInput = document.getElementById('new-subject-input')
 const subjectPicker = document.getElementById('subject-book-picker')
+// TODO - EDIT BUTTON
 
-const addBookmarkForm = document.getElementById("add-form")
-const addBookmarkButton = document.getElementById("submit-bookmark")
 
 function changeContext(direction) {
   let length = loadBookmarks("all");
@@ -42,72 +44,6 @@ function setPersonalSet() {
   localStorage.setItem("personalSet", JSON.stringify(personalSet));
 }
 
-function saveBookmark(newBookmark) {
-  
-  if(newBookmark.url.indexOf("http") == (-1)) {
-    newBookmark.url = "http://" + newBookmark.url
-  }
-
-  let bookmarks;
-  
-  if(localStorage.getItem("bookmarks") === null) {
-    bookmarks = [];
-
-  } else {
-    bookmarks = JSON.parse(localStorage.getItem("bookmarks"));
-  }
-
-
-  bookmarks.push(bookmarkInputed);
-
-  localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
-
-  return bookmarkInputed;
-} 
-
-function createContext(contextTitle) {
-  let newContext = [{
-    context: contextTitle, 
-    data: []
-  }]
-
-  let createdContextIdx = 0;
-
-  let bookmarks = [];
-
-  if(localStorage.getItem('bookmarks')) { // IF THERE'IS NONE CONEXT
-    bookmarks = JSON.parse(localStorage.getItem('bookmarks'));
-
-    bookmarks.push(newContext);
-    createdContextIdx = bookmarks.length-1;
-
-    localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
-  } else {
-    bookmarks.push(newContext);
-
-    localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
-  }
-
-  return { bookmarks, createdContextIdx };
-}
-
-function createSubject(subjectTitle, contextIdx) {
-  let updatedBookmarks = JSON.parse(localStorage.getItem('bookmarks'))
-  let subject = {
-    subject: subjectTitle,
-    data: []
-  }
-
- updatedBookmarks[contextIdx].data =updatedBookmarks[contextIdx].data ? [...updatedBookmarks[contextIdx].data, subject] : [subject];
-  
-  const createdSubjectIdx = updatedBookmarks[contextIdx].data.length-1
-
-  console.log("CREATED NEW SUBJECT", subjectTitle,updatedBookmarks)
-
-  
-  return [updatedBookmarks, createdSubjectIdx];
-}
-
 // GET BOOKMARKS FROM LOCALSTORAGE
 function loadBookmarks(contextIdx = 0) {
   if(contextIdx.toString().toLowerCase() == "all"){
@@ -121,7 +57,6 @@ function loadBookmarks(contextIdx = 0) {
 
   } else
     bookmarks = false;
-  
   return bookmarks
 }
 
@@ -152,7 +87,7 @@ function buildView(currentContextIdx){  // OK
 
       if(block.data) { //APPEND EACH BOOKMARK TO LIST
         block.data.forEach( bookmark => {
-          bookmark_list.appendChild(addBookmark(bookmark))
+          bookmark_list.appendChild(createBookmarkElement(bookmark))
         })
       
         bookmark_block.appendChild(bookmark_list)
@@ -162,27 +97,7 @@ function buildView(currentContextIdx){  // OK
   )
 }
 
-function addBookmark(bookmark) { // RETURN THE ELEMENT TO BE ADDED TO LIST
-  let a = document.createElement('a');
-  a.classList.add("bookmark");
-  a.href = bookmark.url.indexOf("http") != -1 ? bookmark.url : "https://" + bookmark.url;
-  a.target = "_blank";
-
-  let img = document.createElement('img');
-  img.src = bookmark.imageSrc ? bookmark.imageSrc : a.href + '/favicon.ico';
-  
-  let h4 = document.createElement('h4');
-  h4.classList.add("bookmark_title");
-  h4.textContent = bookmark.title;
-
-  a.appendChild(img)
-  a.appendChild(h4)
-
-  return (a)
-}
-
 // LISTENERS
-
 document.addEventListener('DOMContentLoaded', (event) => {
   // localStorage.setItem("bookmarks", JSON.stringify(contentToInsert))
   // =============
@@ -190,8 +105,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
   let currentContextIdx = 0;
   buildView(currentContextIdx) 
   
-  showAddModal.addEventListener('click', (e) => {
-    addBookmarkModal.classList.toggle("hidden");
+  // OPEN MODAL
+  showFormModalButton.addEventListener('click', (e) => {
+    formModal.classList.toggle("hidden");
     
     // TODO - CLOSER HANDLER
     
@@ -203,14 +119,15 @@ document.addEventListener('DOMContentLoaded', (event) => {
     })
 
     let { data: subjects } = loadBookmarks();
+    console.log(subjects)
 
     if(!subjects){ //CREATE CONTEXT INPUT
-      newContextInput.classList.toggle('hidden')
-      newContextInput.attributes.required = true
+      // newContextFieldset.classList.toggle('hidden')  
+      newContextFieldset.attributes.required = true
     }
 
     // RENDER SUBJECT OPTIONS
-    if(subjects.length > 0 ) {
+    if(subjects?.length > 0 ) {
       subjects = subjects.map( ({subject}) => subject);
     } else 
       subjects = [] ;
@@ -223,54 +140,61 @@ document.addEventListener('DOMContentLoaded', (event) => {
       subjectPicker.appendChild(option);
     })
 
-  })
+    showContextFieldsetButton.addEventListener('click', event => {
+      newContextFieldset.classList.toggle('hidden')  
 
-  addBookmarkButton.addEventListener('click', (event) => {
-    event.preventDefault();
-    const formData = new FormData(addBookmarkForm);
+    })
     
-    let bookmarkInputed = Object.fromEntries(formData.entries());    
-    console.log(bookmarkInputed)
-
-    if(bookmarkInputed.context) {
-      const { bookmarks, createdContextIdx } = createContext(bookmarkInputed.context);
+    // ADD BUTTON - SUBMIT MODAL FORM
+    // TODO -> Update genic add button, handle if new bookmark
+    formSubmissionButton.addEventListener('click', (event) => {
+      event.preventDefault();
+      const formData = new FormData(creationForm);
+      
+      let bookmarkInputed = Object.fromEntries(formData.entries());    
+      console.log(bookmarkInputed)
   
-      currentContextIdx = createdContextIdx;
-    }
-
-    // CURRENT BOOKMARKS SAVED
-    let bookmarks = JSON.parse(localStorage.getItem("bookmarks"));
+      if(bookmarkInputed.context) {
+        const { createdContextIdx } = createContext(bookmarkInputed.context);
     
-    const newBookmark = {
-      title: bookmarkInputed.title,
-      url: bookmarkInputed.url,
-      imageSrc: bookmarkInputed.imageSrc,
-    }
-
-    let currentSujectIdx = 0;
-
-    if(bookmarkInputed["subject-picker"] == "new") {
-      let [updatedBookmarks, createdSubjectIdx] = createSubject(bookmarkInputed.subject, currentContextIdx);
-      bookmarks = updatedBookmarks;
-      currentSujectIdx = createdSubjectIdx
-      
-    } else {
-      bookmarks[currentContextIdx].data.forEach((subjectData, subjectIdx) => {
-        if(bookmarkInputed.subject == subjectData.subject) {
-          currentSujectIdx = subjectIdx;
-          console.log("SUBJECT CHANGED", currentSujectIdx)
+        currentContextIdx = createdContextIdx;
+      }
+      if(bookmarkInputed.title) {
+        // CURRENT BOOKMARKS SAVED
+        let bookmarks = JSON.parse(localStorage.getItem("bookmarks"));
+        
+        const newBookmark = {
+          title: bookmarkInputed.title,
+          url: bookmarkInputed.url,
+          imageSrc: bookmarkInputed.imageSrc,
         }
-      })
-      
-    }
 
-    console.log("CURRENT CONTEXT IDX", currentContextIdx, bookmarks)
+        // HANDLE SUBJECT
+        let currentSubjectIdx = 0;
     
-    bookmarks[currentContextIdx].data[currentSujectIdx].data =  [...bookmarks[currentContextIdx].data[currentSujectIdx].data, newBookmark]
-
-    console.log("Complete :", bookmarks)
-    localStorage.setItem("bookmarks", JSON.stringify(bookmarks))
-    buildView(currentContextIdx)
+        if(bookmarkInputed["subject-picker"] == "new") {
+          let [updatedBookmarks, createdSubjectIdx] = createSubject(bookmarkInputed.subject, currentContextIdx);
+          bookmarks = updatedBookmarks;
+          currentSubjectIdx = createdSubjectIdx;
+          console.log(createdSubjectIdx)
+          
+        } else {
+          currentSubjectIdx = bookmarkInputed["subject-picker"];        
+        }
+    
+        console.log("CURRENT CONTEXT IDX", currentContextIdx,"CURRENT SUBJECT IDX",currentSubjectIdx,"\nBookmarks", bookmarks)
+        
+        bookmarks[currentContextIdx].data[currentSubjectIdx].data =  [...bookmarks[currentContextIdx].data[currentSubjectIdx].data, newBookmark]
+    
+        console.log("Complete :", bookmarks)
+        localStorage.setItem("bookmarks", JSON.stringify(bookmarks))
+      }
+  
+      formModal.classList.toggle("hidden");
+      creationForm.reset();
+      
+      buildView(currentContextIdx)
+    })
   })
 
   prevContextBtn.addEventListener('click', () => {
@@ -295,3 +219,14 @@ document.addEventListener('DOMContentLoaded', (event) => {
     }
   })
 });
+
+resetDataBtn.addEventListener("click", () => {
+  // ASK WHAT TO RESET
+    // BOOKMARKS DATA
+    // PERSONAL PREFERENCES - TODO
+
+  localStorage.setItem("bookmarks", JSON.stringify(contentToInsert))
+  window.location.reload()
+  
+})
+console.log("object")

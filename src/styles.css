@@ -14,6 +14,8 @@ body {
 button {
   line-height: 0;
   cursor: pointer;
+  background: transparent;
+  border: none;
 }
 
 /* END GLOBAL SETTINGS*/
@@ -147,7 +149,7 @@ header button {
 }
 
 .hidden {
-  display: none !important ; 
+  display: none; 
 }
 
 /* END MODAL */
@@ -187,6 +189,10 @@ a {
   /* background-color: rgba(200, 200, 211, 0.66); */
 }
 
+#content .bookmark-wrapper {
+  position: relative;
+}
+
 #content .bookmark_list .bookmark {  
   display: flex;
 
@@ -214,6 +220,23 @@ a {
 #content .bookmark_list .bookmark .bookmark_title{
   align-self: center;
   font-size: 1rem;
+}
+
+/* DELETE BUTTON */
+#content .bookmark_list button{ 
+  position: absolute;
+  right: 10%;
+  top: 50%;
+  transform: translate(0, -50%);
+}
+
+#content .bookmark_list .bookmark-wrapper:hover button{ 
+  display: block;
+  opacity: 0.5;
+}
+#content .bookmark_list .bookmark-wrapper button:hover{ 
+  opacity: 1;
+
 }
 
 /* END BOOKMARKS */
